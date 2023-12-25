@@ -1,0 +1,61 @@
+header {
+    margin-top: -2.50%;
+    margin-left: -2.00%;
+    background-color: #091c32; /* Amazon's header background color */
+    color: #ffffff;
+    position: relative;
+    width: 1600px;
+    z-index: 1000;
+    display: flex;
+    .login{
+      margin-top: 3.6%;
+      margin-left: 65%;
+      left: 200px;
+  
+    }
+  }
+  .anchor{
+    position: absolute; 
+    top: 20px; 
+    right: 0px; 
+  }
+  .amazon-logo {
+      margin-top: 2.5%;
+      font-family: Arial, sans-serif; /* Use a similar sans-serif font */
+      font-size: 3em;
+      text-shadow: 0 0 10px rgba(124, 118, 118, 0.751);
+      color: #fbfbfb; /* Amazon's orange color */
+      font-weight: bold;
+      letter-spacing: -3px; /* Adjust letter spacing */
+  }
+  a {
+      text-decoration: none;
+      color: inherit;
+}
+
+.item-container {
+    margin-left: 300px;
+    display: flex; /* Use flexbox to align items horizontally */
+    align-items: center; /* Align items vertically in the center */
+    border: 0px solid #ccc; /* Example border for item container */
+    padding: 5px; /* Example padding for item container */
+    margin-bottom: 10px; /* Adjust spacing between items */
+    max-width: 800px;
+}
+
+.name-container,
+.quantity-container,
+.price-container {
+    /* margin-left: 100px; */
+    margin-right: 10px; /* Adjust spacing between containers */
+}
+
+.delete-button {
+    margin-left: auto; /* Push the delete button to the right */
+}
+.total-container{
+    margin-left: 800px;
+}
+.quantity-container{
+    margin-left: auto; /* Push the delete button to the right */
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cartt.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>Cart Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1 class="amazon-logo"><a href="/">&nbsp;&nbsp;&nbsp;De Parfum</a></h1>
+        <div class="login">
+            {% if username %}
+                <b><a href="{{ url_for('user_page') }}"> Hello {{ username }} </a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <b role="presentation"><a href="/login">Log In</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b role="presentation"><a href="/signup">Sign Up</a></b>
+            {% endif %}
+        </div>
+    </header>
+    <!-- <div class="wrapper">
+        <div class="sidebar">
+            <ul class="sidebar-menu"><br><br><br><br><br><br><br><br><br><br><br>
+                <li><a href="#">Home</a></li><br>
+                <li><a href="#">Products</a></li><br>
+                <li><a href="#">Orders</a></li>
+            </ul>
+        </div>
+    </div> -->
+    <!-- ... your existing HTML code ... -->
+
+<div class="product_container">
+    <h1 class="item-container">Shopping Cart</h1>
+    <ul id="cart-items" class="cart-list"></ul>
+    <b class="total-container" id="total-price">Total Price: $0</b>
+
+    <script>
+        function displayCart() {
+            var cartList = document.getElementById('cart-items');
+            var totalPrice = 0;
+
+            // Retrieve cart data from Local Storage
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            cart.forEach(function (item, index) {
+                var divContainer = document.createElement('div'); // Create a container for each item
+                divContainer.classList.add('item-container'); // Add a class for item container
+
+                var nameContainer = document.createElement('div'); // Container for item name
+                nameContainer.classList.add('name-container'); // Add a class for name container
+                var quantityContainer = document.createElement('div'); // Container for item quantity
+                quantityContainer.classList.add('quantity-container'); // Add a class for quantity container
+                var priceContainer = document.createElement('div'); // Container for item price
+                priceContainer.classList.add('price-container'); // Add a class for price container
+                var deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-button'); // Add a class for delete button
+
+                nameContainer.textContent =  item.name; 
+                quantityContainer.textContent = 'Quantity: ' + item.quantity;
+                priceContainer.textContent = 'Total Price: $' + (item.price * item.quantity);
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.onclick = function () {
+                    removeFromCart(index);
+                    cartList.removeChild(divContainer); // Remove the entire item container
+                    updateTotalPrice();
+                };
+
+                divContainer.appendChild(nameContainer); // Append name container to the item container
+                divContainer.appendChild(quantityContainer); // Append quantity container to the item container
+                divContainer.appendChild(priceContainer); // Append price container to the item container
+                divContainer.appendChild(deleteBtn); // Append the delete button to the item container
+
+                cartList.appendChild(divContainer); // Append the entire container to the list
+
+                totalPrice += item.price * item.quantity;
+            });
+
+
+
+            updateTotalPrice();
+        }
+
+        function updateTotalPrice() {
+            var totalPrice = 0;
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            cart.forEach(function (item) {
+                totalPrice += item.price * item.quantity;
+            });
+
+            document.getElementById('total-price').textContent = 'Total Price:  $ ' + totalPrice;
+        }
+
+        function removeFromCart(index) {
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        displayCart();
+    </script>
+</div>
+<!-- ... rest of your HTML ... -->
+
+    
+</body>
+</html>

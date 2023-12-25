@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>de parfum</title><br>
+</head>
+<body>
+    <header>
+        <h1 class="amazon-logo"><a href="/">&nbsp;&nbsp;&nbsp;De Parfum</a></h1>
+        <div class="login">
+            {% if username %}
+                <b><a href="{{ url_for('user_page') }}"> Hello {{ username }} </a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <b role="presentation"><a href="/login">Log In</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b role="presentation"><a href="/signup">Sign Up</a></b>
+            {% endif %}
+        </div>
+    </header>
+    
+    <div class="sidebar">
+        <ul class="sidebar-menu"><br><br><br><br><br><br><br><br><br><br>
+            <li><a href="#">Home</a></li><br>
+            <li><a href="#">Products</a></li><br>
+            <li><a href="/cart">Cart</a></li><br><br><br>
+            <div class="filter">
+                <b>Filters</b><br>
+                <h7 for="price-slider">Price Range:</h7><br><br>
+                <div id="price-range">
+                    <div id="price-slider"></div>
+                    <div id="price-range-values">
+                        <span id="min-price">$ 0</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="max-price">$ 200</span>
+                    </div>
+                </div>
+                <button id="apply-filters">Apply Filters</button>
+                <!-- Add more menu items -->
+                <!-- <div id="products">
+                    {% for post in posts %}
+                        <div class="product">
+                            <h3>{{ post.name }}</h3>
+                            <p>Price: ${{ post.price }}</p>
+                        </div>
+                    {% endfor %}
+                </div> -->
+            </div>
+        </ul>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    <div class="wrapper">
+        <ul class="list">
+            {% for post in posts %}
+                    <li>
+                        <div class="blog-card">
+                            <a href="/product/{{ post.id }}">
+                            {% if post.image %}
+                                <img class="blog-img" src="{{ url_for('static', filename='images/' + post.image) }}" alt="{{ post.image }}">
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                            <div class="text-overlay">
+                                <h2>{{ post.title }} </h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {% if current_user.is_authenticated %}
+                                    <a class="edit_tag" href="/edit/{{ post.id }}" title="Edit product"><img src="https://www.freeiconspng.com/uploads/edit-editor-pen-pencil-write-icon--4.png" width="5%"></a>
+                                    {% endif %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="edit_tag" href="/product/{{ post.id }}" title="Product Page"><img src="https://www.clipartmax.com/png/middle/361-3614560_the-front-page-of-bxx-product-category-information-icon.png" width="15%" ></a>
+                                <p>$ {{ post.price }}</p>
+                                <p>{{ post.author }}</p>
+                            </div>
+                        </div>
+                    </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/filter.js"></script>
+    
+</body>
+</html>

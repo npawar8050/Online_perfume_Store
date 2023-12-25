@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <title>User Page</title>
+</head>
+<body>
+    <header>
+        <h1 class="amazon-logo"><a href="/">&nbsp;&nbsp;&nbsp;De Parfum</a></h1>
+        <div class="login">
+            <!-- <b role="presentation"><a href="/login">Log In</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b role="presentation"><a href="/signup">Sign Up</a></b> -->
+
+            {% if username %}
+                <b><a href="{{ url_for('user_page') }}"> Hello {{ username }} </a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <b role="presentation"><a href="/login">Log In</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b role="presentation"><a href="/signup">Sign Up</a></b>
+            {% endif %}
+        </div>
+    </header>
+    
+    <h1>Welcome, {{ username }}</h1>
+    <p>Your Email: {{ email }}</p>
+    <p>Your Username: {{ username }}</p>
+    <!-- Form to update user details -->
+    <form action="{{ url_for('update_user') }}" method="post">
+        <input type="text" name="new_username" placeholder="New Username"><br>
+        <input type="email" name="new_email" placeholder="New Email"><br>
+        <input type="password" name="new_password" placeholder="New Password"><br>
+        <button type="submit">Update</button>
+    </form>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>

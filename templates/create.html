@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <title>Create Post</title>
+</head>
+<body>
+    <div id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <header>
+        <h1 class="amazon-logo"><a href="/">&nbsp;&nbsp;&nbsp;De Parfum</a></h1>
+        <div class="login">
+            <b role="presentation"><a href="/showSignin">Sign In</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b role="presentation"><a href="/showSignUp">Sign Up</a></b>
+        </div>
+    </header>
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul class="sidebar-menu"><br><br><br><br><br><br><br><br><br><br><br>
+                <li><a href="#">Home</a></li><br>
+                <li><a href="#">Products</a></li><br>
+                <li><a href="#">Orders</a></li>
+                <!-- Add more menu items -->
+            </ul>
+        </div>
+    <div class="container">
+        <h1>Add a new product here</h1>
+        <form class="blog-form" method="POST" action="/create" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">Product image here:</label>
+                <input type="file" name="image">
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Enter post title">
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="text" id="price" name="price" placeholder="Enter price...">
+            </div>
+            <div class="form-group">
+                <label for="author">Seller:</label>
+                <input type="text" id="author" name="author" placeholder="Enter your name here">
+            </div>
+            <div class="form-group">
+                <label for="desc">Description:</label>
+                <textarea type="text" id="desc" name="desc" placeholder="Enter product description here"></textarea>
+            </div>
+            <button type="submit">Publish</button>
+        </form>
+</body>
+</html>

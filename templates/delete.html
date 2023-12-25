@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Post</title>
+</head>
+<body>
+    <h1>Delete Post</h1>
+    <p>Are you sure you want to delete the post titled "{{ post.title }}"?</p>
+    <form method="POST" action="/delete/{{ post.id }}">
+        <input type="submit" value="Confirm">
+        <a href="/">Cancel</a>
+    </form>
+</body>
+</html>

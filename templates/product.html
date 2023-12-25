@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Product Page</title>
+</head>
+<body>
+    <header>
+        <h1 class="amazon-logo"><a href="/">&nbsp;&nbsp;&nbsp;De Parfum</a></h1>
+        <div class="login">
+            {% if username %}
+                <b><a href="{{ url_for('user_page') }}"> Hello {{ username }} </a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <b role="presentation"><a href="/login">Log In</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b role="presentation"><a href="/signup">Sign Up</a></b>
+            {% endif %}
+        </div>
+    </header>
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul class="sidebar-menu"><br><br><br><br><br><br><br><br><br><br><br>
+                <li><a href="#">Home</a></li><br>
+                <li><a href="#">Products</a></li><br>
+                <li><a href="#">Orders</a></li>
+                <!-- Add more menu items -->
+            </ul>
+        </div>
+    </div>
+    <!-- <h1 >Product Details</h1> -->
+    <div class="product_container">
+        <form class="blog-form">
+            <h1>Product Details</h1>
+        </form>
+        
+        <form class="blog-form" method="POST" action="/cart" enctype="multipart/form-data">
+            <div class="form-group">
+                {% if post.image %}
+                    <img class="blog-img" width="200px" src="{{ url_for('static', filename='images/' + post.image) }}" alt="{{ post.image }}">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="title">Product name: </label>{{ post.title }}
+            </div>
+            <div class="form-group">
+                <label for="price">Price: $</label><span id="originalPrice">{{ post.price }}</span>
+            </div>
+            <div class="form-group">
+                <label for="qty">Select Quantity: </label>
+                <select id="qty" name="qty">
+                    {% for i in range(1, 6) %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- ######################################################### -->
+            <div class="form-group">
+                <label for="price">Total Price: $</label><span id="totalPrice">{{ post.price }}</span>
+            </div>
+            <script>
+                // Get the quantity dropdown and price display element
+                const quantityDropdown = document.getElementById('qty');
+                const originalPriceDisplay = document.getElementById('originalPrice');
+                const totalPriceDisplay = document.getElementById('totalPrice');
+
+                // Store the original price
+                const originalPrice = parseFloat(originalPriceDisplay.textContent);
+                
+                // Function to update the displayed price based on the selected quantity and original price
+                function updatePrice() {
+                    const selectedQuantity = parseInt(quantityDropdown.value);
+                    const totalPrice = originalPrice * selectedQuantity;
+                    totalPriceDisplay.textContent = totalPrice.toFixed(2);
+                }
+                quantityDropdown.addEventListener('change', updatePrice);
+                
+                // Initial call to set the initial price on page load
+                updatePrice();
+            </script>
+                
+            <div class="form-group">
+                <label for="author">Seller: </label>{{ post.author }}
+            </div>
+            <!-- ############ addToCart ############# -->
+            <script>
+                function addToCart(name, price,quantity) {
+                    // var qty = document.getElementById('quantity').value; // Retrieve selected quantity
+                    var newItem = {
+                        name: name,
+                        price: price,
+                        quantity: quantity // Assuming initially adding one item
+                    };
+
+                    // Retrieve existing cart data from Local Storage or initialize an empty array
+                    var cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    cart.push(newItem);
+
+                    // Save updated cart data back to Local Storage
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                }
+            </script>
+            <button onclick="addToCart('{{ post.title }}', '{{ post.price }}', document.getElementById('qty').value)">Add to Cart</button>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+            <a href="/cart">View Cart</a>
+        </form>
+        <form class="blog-form">
+            <div class="form-group">
+                <br><br><br>
+                <label for="desc">Product Description: </label><br><br>{{ post.desc }}
+            </div>
+        </form>
+    </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
+</body>
+</html>
