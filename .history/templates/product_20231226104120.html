@@ -91,32 +91,28 @@
             <!-- ############ addToCart ############# -->
             <script>
                 function addToCart(name, price, quantity) {
-                    // Ensure quantity is a numeric value
-                    quantity = parseInt(quantity, 10) || 1;
+                // Retrieve existing cart data from Local Storage or initialize an empty array
+                var cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-                    // Retrieve existing cart data from Local Storage or initialize an empty array
-                    var cart = JSON.parse(localStorage.getItem('cart')) || [];
+                // Check if an item with the same name already exists in the cart
+                var existingItem = cart.find(item => item.name === name);
 
-                    // Check if an item with the same name already exists in the cart
-                    var existingItem = cart.find(item => item.name === name);
-
-                    if (existingItem) {
-                        // If the item exists, update the quantity
-                        existingItem.quantity += quantity;
-                    } else {
-                        // If the item doesn't exist, add a new item to the cart
-                        var newItem = {
-                            name: name,
-                            price: price,
-                            quantity: quantity
-                        };
-                        cart.push(newItem);
-                    }
+                if (existingItem) {
+                    // If the item exists, update the quantity
+                    existingItem.quantity += quantity;
+                } else {
+                    // If the item doesn't exist, add a new item to the cart
+                    var newItem = {
+                        name: name,
+                        price: price,
+                        quantity: quantity
+                    };
+                    cart.push(newItem);
+                }
 
                     // Save the updated cart data back to Local Storage
                     localStorage.setItem('cart', JSON.stringify(cart));
                 }
-
 
             </script>
             <button onclick="addToCart('{{ post.title }}', '{{ post.price }}', document.getElementById('qty').value)">Add to Cart</button>

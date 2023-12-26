@@ -18,7 +18,7 @@ header {
 	margin-top: -1.50%;
 	background-color: #091c32; /* Amazon's header background color */
 	color: #ffffff;
-	position: relative;
+	position: fixed;
 	width: auto;
 	z-index: 1000;
 	display: flex;

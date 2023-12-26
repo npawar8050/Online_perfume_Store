@@ -16,14 +16,8 @@
         <h1 class="amazon-logo"><a href="/">&nbsp;&nbsp;&nbsp;De Parfum</a></h1>
         <div class="login">
             {% if username %}
-                <div class="dropdown">
-                    <button>Hello {{ username }}</button>
-                    <div class="dropdown-options">
-                        <a href="{{ url_for('user_page') }}">Your Profile</a><br>
-                        <a href="#">Setting</a><br>
-                        <a href="{{ url_for('logout') }}">Logout</a>
-                    </div>
-                </div>
+                <b><a href="{{ url_for('user_page') }}"> Hello {{ username }} </a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
                 <b role="presentation"><a href="/login">Log In</a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <b role="presentation"><a href="/signup">Sign Up</a></b>
